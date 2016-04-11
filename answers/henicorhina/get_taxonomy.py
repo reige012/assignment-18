@@ -43,25 +43,31 @@ def ncbi(args):
     full_tax = ['superclass', 'class', 'subclass',
                 'infraclass', 'superorder', 'order',
                 'superfamily', 'family', 'genus']
-    # entrez_db = Entrez.einfo()
-    esearch_query = Entrez.esearch(db="taxonomy",
-                                   term="sialia sialis",
-                                   retmode="xml")
-    esearch_result = Entrez.read(esearch_query)
-    # print(esearch_result)
-    for iden in esearch_result['IdList']:
-        tax_entry = Entrez.efetch(db="taxonomy", id=iden, retmode="xml")
-        result = Entrez.read(tax_entry)
-        taxonomy = result[0]['Lineage'].replace(';', '').split()
-        part_tax = taxonomy[-6:]
-        l = [2, 4, 6]
-        for val in l:
-            part_tax.insert(val, "NA")
-        with open(args.in_file, 'w') as outfile:
-            writer = csv.writer(outfile, delimiter=',',
-                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow(full_tax)
-            writer.writerow(part_tax)
+    with open(args.in_file) as infile:
+        for sp in infile:
+            species = sp.strip('\n')  # remove newlines
+            with open(args.out_file, 'w') as outfile:
+                writer = csv.writer(outfile, delimiter=',',
+                                    quotechar='|',
+                                    quoting=csv.QUOTE_MINIMAL)
+                writer.writerow(full_tax)  # add header row
+                time.sleep(1)
+                esearch_query = Entrez.esearch(db="taxonomy",
+                                               term=species,
+                                               retmode="xml")
+                esearch_result = Entrez.read(esearch_query)
+                # print(esearch_result)
+                for iden in esearch_result['IdList']:
+                    tax_entry = Entrez.efetch(db="taxonomy",
+                                              id=iden,
+                                              retmode="xml")
+                    result = Entrez.read(tax_entry)
+                    taxonomy = result[0]['Lineage'].replace(';', '').split()
+                    part_tax = taxonomy[-6:]
+                    l = [2, 4, 6]
+                    for val in l:
+                        part_tax.insert(val, "NA")
+                    writer.writerow(part_tax)
 
 
 def main():
