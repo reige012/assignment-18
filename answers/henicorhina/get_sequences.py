@@ -52,13 +52,13 @@ def ncbi_fasta(args):
         esearch_result = Entrez.read(esearch_query)
         time.sleep(1)
         # print(esearch_result)
-        ident = "txid{}".format(esearch_result['IdList'][0]) 
+        ident = "txid{}".format(esearch_result['IdList'][0])
         genbank_entries = Entrez.esearch(db="nucleotide",
                                          term=ident,
                                          retmode="xml")
         esearch_seqs = Entrez.read(genbank_entries)
         time.sleep(1)
-        for record in esearch_seqs['IdList']:    
+        for record in esearch_seqs['IdList']:
             seq_entry = Entrez.efetch(db="nucleotide",
                                       id=record,
                                       rettype="gb",
@@ -73,13 +73,13 @@ def ncbi_fasta(args):
 
 def main():
     args = get_args()
-    # rename outfile to .csv if needed
+    # rename outfile to .fasta if needed
     if args.out_file[-6:] != '.fasta':
         args.out_file += '.fasta'
     else:
         pass
     Entrez.email = "ojohns7@lsu.edu"
-    os.chdir(os.path.dirname(args.out_dir))
+    os.chdir(os.path.abspath(args.out_dir))
     args.species = args.species.lower()
     ncbi_fasta(args)
 
