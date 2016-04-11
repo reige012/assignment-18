@@ -45,25 +45,30 @@ def ncbi_fasta(args):
     queries NCBI for all sequence data
     and writes the results to a fasta file
     """
-    esearch_query = Entrez.esearch(db="taxonomy",
-                                   term=args.species,
-                                   retmode="xml")
-    esearch_result = Entrez.read(esearch_query)
-    time.sleep(1)
-    # print(esearch_result)
-    ident = "txid{}".format(esearch_result['IdList'][0]) 
-    genbank_entries = Entrez.esearch(db="nucleotide",
-                                     term=ident,
-                                     retmode="xml")
-    esearch_seqs = Entrez.read(genbank_entries)
-    time.sleep(1)
-    for record in esearch_seqs['IdList']:    
-        seq_entry = Entrez.efetch(db="nucleotide",
-                                  id=record,
-                                  rettype="gb",
-                                  retmode="text")
+    with open(args.out_file, 'w') as outfile:
+        esearch_query = Entrez.esearch(db="taxonomy",
+                                       term=args.species,
+                                       retmode="xml")
+        esearch_result = Entrez.read(esearch_query)
         time.sleep(1)
-        record = SeqIO.read(seq_entry, 'genbank')
+        # print(esearch_result)
+        ident = "txid{}".format(esearch_result['IdList'][0]) 
+        genbank_entries = Entrez.esearch(db="nucleotide",
+                                         term=ident,
+                                         retmode="xml")
+        esearch_seqs = Entrez.read(genbank_entries)
+        time.sleep(1)
+        for record in esearch_seqs['IdList']:    
+            seq_entry = Entrez.efetch(db="nucleotide",
+                                      id=record,
+                                      rettype="gb",
+                                      retmode="text")
+            time.sleep(1)
+            record = SeqIO.read(seq_entry, 'genbank')
+            if record.seq[0] == 'N':
+                pass
+            else:
+                SeqIO.write(record, outfile, 'fasta')
 
 
 def main():
