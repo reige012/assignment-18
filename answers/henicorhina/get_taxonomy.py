@@ -43,19 +43,20 @@ def ncbi(args):
     full_tax = ['superclass', 'class', 'subclass',
                 'infraclass', 'superorder', 'order',
                 'superfamily', 'family', 'genus']
-    with open(args.in_file) as infile:
-        for sp in infile:
-            species = sp.strip('\n')  # remove newlines
-            with open(args.out_file, 'w') as outfile:
-                writer = csv.writer(outfile, delimiter=',',
-                                    quotechar='|',
-                                    quoting=csv.QUOTE_MINIMAL)
-                writer.writerow(full_tax)  # add header row
-                time.sleep(1)
+    with open(args.out_file, 'w') as outfile:
+        writer = csv.writer(outfile, delimiter=',',
+                            quotechar='|',
+                            quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(full_tax)  # add header row
+        with open(args.in_file, 'r') as infile:
+            for sp in infile:
+                species = sp.strip('\n')  # remove newlines
+                print('i am working on species: {}'.format(species))
                 esearch_query = Entrez.esearch(db="taxonomy",
                                                term=species,
                                                retmode="xml")
                 esearch_result = Entrez.read(esearch_query)
+                time.sleep(1)
                 # print(esearch_result)
                 for iden in esearch_result['IdList']:
                     tax_entry = Entrez.efetch(db="taxonomy",
