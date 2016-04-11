@@ -48,6 +48,7 @@ def ncbi(args):
                             quotechar='|',
                             quoting=csv.QUOTE_MINIMAL)
         writer.writerow(full_tax)  # add header row
+        writer = csv.DictWriter(outfile, fieldnames=full_tax)
         with open(args.in_file, 'r') as infile:
             for sp in infile:
                 species = sp.strip('\n')  # remove newlines
@@ -63,12 +64,11 @@ def ncbi(args):
                                               id=iden,
                                               retmode="xml")
                     result = Entrez.read(tax_entry)
-                    taxonomy = result[0]['Lineage'].replace(';', '').split()
-                    part_tax = taxonomy[-6:]
-                    l = [2, 4, 6]
-                    for val in l:
-                        part_tax.insert(val, "NA")
-                    writer.writerow(part_tax)
+                    taxon_dict = {}
+                    for rank in result[0]['LineageEx']:
+                        if rank["Rank"] in full_tax:
+                            taxon_dict[rank["Rank"]] = rank["ScientificName"]
+                    writer.writerow(taxon_dict)
 
 
 def main():
