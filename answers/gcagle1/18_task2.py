@@ -51,9 +51,11 @@ def get_genbank_entries(org_id):
     seq_id = esearch_result['IdList']
     for record in seq_id:
         time.sleep(1)
-        genbank_record = Entrez.efetch(db='nucleotide', id=record, rettype='gb', retmode='text')
-        record = SeqIO.read(genbank_record, 'genbank')
-        entries.append(record.seq)
+        handle = Entrez.efetch(db='nucleotide', id=record, rettype='fasta', retmode='text')
+        seq_record = SeqIO.read(handle, "fasta")
+        # record = SeqIO.read(seq_record, 'genbank')
+        # entries.append(record.seq)
+        entries.append(seq_record.seq)
     return(entries)
 
 

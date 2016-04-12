@@ -15,6 +15,8 @@ from Bio import Entrez
 from Bio import SeqIO
 from Bio import Seq
 from Bio import SeqRecord
+from Bio.Blast import NCBIWWW
+from Bio.Blast import NCBIXML
 import time
 import csv
 
@@ -55,14 +57,24 @@ def get_genbank_entries(org_id):
         # record = SeqIO.read(seq_record, 'genbank')
         # entries.append(record.seq)
         entries.append(seq_record.seq)
+    # print(entries)
     return(entries)
+
+
+def blast_entries(genbank_entries):
+    for record in genbank_entries:
+        result_handle = NCBIWWW.qblast("blastn", "nr", record)
+        blast_records = NCBIXML.parse(result_handle)
+        print(blast_records)
+        import pdb; pdb.set_trace()
 
 
 def main():
     Entrez.email = 'gcagle1@lsu.edu'
     args = get_args()
     org_id = get_tax_id(args)
-    genbank_entries = get_genbank_entries(org_id)\
+    genbank_entries = get_genbank_entries(org_id)
+    blast_entries(genbank_entries)
 
 if __name__ == '__main__':
     main()
