@@ -1,0 +1,29 @@
+aimophila rufescens
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Aimophila'}ammodramus leconteii
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Ammodramus'}ammodramus savannarum
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Ammodramus'}amphispiza belli
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Amphispiza'}amphispiza bilineata
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Amphispiza'}arremon aurantiirostris
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Arremon'}arremon brunneinucha
+{'superfamily': 'Passeroidea', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'family': 'Fringillidae', 'class': 'Aves', 'genus': 'Buarremon'}arremonops rufivirgatus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Arremonops'}atlapetes citrinellus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Atlapetes'}atlapetes gutturalis
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Atlapetes'}calamospiza melanocorys
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Calamospiza'}chlorospingus ophthalmicus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Chlorospingus'}chondestes grammacus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Chondestes'}geothlypis trichas
+{'superfamily': 'Passeroidea', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'family': 'Parulidae', 'class': 'Aves', 'genus': 'Geothlypis'}icterus gularis
+{'superfamily': 'Passeroidea', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'family': 'Icteridae', 'class': 'Aves', 'genus': 'Icterus'}junco phaeonotus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Junco'}melospiza melodia
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Melospiza'}melozone aberti
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Kieneria'}melozone leucotis
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Melozone'}oriturus superciliosus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Oriturus'}passerculus sandwichensis
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Passerculus'}passerella iliaca
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Passerella'}pezopetes capitalis
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Pezopetes'}pipilo chlorurus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Pipilo'}pooecetes gramineus
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Pooecetes'}spizella arborea
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Spizella'}spizella atrogularis
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Spizella'}zonotrichia atricapilla
+{'family': 'Passerellidae', 'class': 'Aves', 'order': 'Passeriformes', 'superorder': 'Neognathae', 'genus': 'Zonotrichia'}
