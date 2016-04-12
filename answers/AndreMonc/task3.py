@@ -79,18 +79,25 @@ def get_GI_seqIDs(nested_data_list):
 
 def blast_with_GIs(GI_seqIDs):
     """
-    Heavily based on Biopython cookbook example
+    Based in part on Biopython cookbook example.
+    Try and except structure of function suggested by Subir
     """
     counter = 1
     for GI_ID in GI_seqIDs:
-        result = NCBIWWW.qblast("blastn", "nt", GI_ID, format_type="Text")
-        blast_results = result.read()
-        with open("{}_{}.txt".format(blast_results, counter), "w") as outfile:
-            outfile.write(blast_results)
-        counter += 1
+        try:
+            result = NCBIWWW.qblast("blastn", "nt", GI_ID, format_type="Text")
+            blast_results = result.read()
+            with open("{}_{}.txt".format("blast_results", counter), "w") as outfile:
+                outfile.write(blast_results)
+            counter += 1
+        except:
+            print("No sequence available for gi|{}".format(GI_ID))
+        time.sleep(1)
+
 
 def main():
     args = parser()
+    """
     tax_identifier = get_sp_identifier(args.name)
     # print(tax_identifier)
     genbank_identifiers = get_genbank_identifiers(tax_identifier)
@@ -99,6 +106,8 @@ def main():
     # print(nested_data_list)
     GI_seqIDs = get_GI_seqIDs(nested_data_list)
     # print(GI_seqIDs)
+    """
+    GI_seqIDs = ['239819098', '815826725', '49458051', '49458049', '223037237', '219398693', '215260324', '57792506', '34484220', '225031058']
     os.makedirs(args.out_dir)
     os.chdir(args.out_dir)
     blast_with_GIs(GI_seqIDs)
