@@ -10,16 +10,13 @@ and writing output text files to a directory
 
 import argparse
 # import glob
-# import os
+import os
 from Bio import Entrez
 #from Bio import SeqIO
-from Bio import Seq
-from Bio import SeqRecord
 from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
-from Bio import GenBank
 import time
-import csv
+#import csv
 
 
 def get_args():
@@ -39,6 +36,7 @@ def get_args():
 
 
 def get_tax_id(args):
+    '''searches NCBI taxonomy for the input organism'''
     esearch_query = Entrez.esearch(db='taxonomy', term=args.name, retmode='xml')
     esearch_result = Entrez.read(esearch_query)
     org_id = esearch_result['IdList']
@@ -46,40 +44,43 @@ def get_tax_id(args):
 
 
 def get_genbank_entries(org_id):
-    entries = []
+    '''returns a list of GIs'''
     org_id2 = "txid{}".format(org_id[0])
     genbank_entries = Entrez.esearch(db='nucleotide', term=org_id2, retmode='xml')
     esearch_result = Entrez.read(genbank_entries)
     seq_id = esearch_result['IdList']
-    return(seq_id)
+    return seq_id
 
 
 def blast_entries(genbank_entries):
-    rec = []
+    '''blasts GIs and returns a list of records'''
+    records = []
     for record in genbank_entries:
+        time.sleep(1)
         try:
             result_handle = NCBIWWW.qblast("blastn", "nt", record)
-            blast_records = NCBIXML.read(result_handle)
-            b_parser = NCBIWWW.BlastParser()
-            b_record = b_parser.parse(blast_records)
-            rec.append(b_record)
-            print(b_record)
-            import pdb; pdb.set_trace()
+            blast_record = NCBIXML.read(result_handle)
+            records.append(blast_record)
         except:
             pass
+    return records
 
-    return rec
 
+def write_file(args, records):
+    for rec in records:
+        filename = (os.path.join(args.outfile, str(rec.query_id)))
+        with open(filename, 'w') as f:
+            f.write(rec)
 
-def write_file(blast_results):
-    pass
 
 def main():
     Entrez.email = 'gcagle1@lsu.edu'
     args = get_args()
     org_id = get_tax_id(args)
     genbank_entries = get_genbank_entries(org_id)
-    blast_results = blast_entries(genbank_entries)
+    records = blast_entries(genbank_entries)
+    write_file(args, records)
+
 
 if __name__ == '__main__':
     main()
