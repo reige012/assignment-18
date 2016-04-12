@@ -16,7 +16,8 @@ import time
 import argparse
 from Bio import Entrez
 from Bio import SeqIO
-from Bio import Blast
+from Bio.Blast import NCBIWWW
+from Bio.Blast import NCBIXML
 
 
 def get_args():
@@ -26,7 +27,7 @@ def get_args():
     parser.add_argument('--species',
                         type=str,
                         required=True,
-                        help="enter a genus + species name",
+                        help="enter a genus + species name enclosed in parentheses",
                         )
     parser.add_argument('--out_dir',
                         type=str,
@@ -40,7 +41,8 @@ def ncbi_fasta(args):
     """
     takes input species name and outfile
     queries NCBI for all sequence data
-    and writes the results to a fasta file
+    then BLASTs them against NCBI
+    and writes the results to an xml file
     """
     esearch_query = Entrez.esearch(db="taxonomy",
                                    term=args.species,
@@ -60,20 +62,18 @@ def ncbi_fasta(args):
                                   rettype="gb",
                                   retmode="text")
         time.sleep(1)
-        record = SeqIO.read(seq_entry, 'genbank')
-        if record.seq[0] == 'N':
+        records = SeqIO.read(seq_entry, 'genbank')
+        print('i am working on record #: {}'.format(records.name))
+        if records.seq[0] == 'N':
             pass
         else:
-            result = Blast.NCBIWWW.qblast('blastn',
-                                          'nt',
-                                          record.format("fasta"))
-            blast_records = Blast.NCBIXML.parse(result)
-            counter = 1
-            for record in blast_records:
-                name = "{}_{}.xml".format(record.name, counter)
-                with open(name, 'w') as outfile:
-                    outfile.write(record)
-                counter += 1
+            result = NCBIWWW.qblast('blastn',
+                                    'nt',
+                                    records.format("fasta"))
+            # blast_records = NCBIXML.read(result)
+            name = "{}.xml".format(records.name)
+            with open(name, 'w') as outfile:
+                outfile.write(result.read())
 
 
 def main():
