@@ -12,11 +12,12 @@ import argparse
 # import glob
 # import os
 from Bio import Entrez
-from Bio import SeqIO
+#from Bio import SeqIO
 from Bio import Seq
 from Bio import SeqRecord
 from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
+from Bio import GenBank
 import time
 import csv
 
@@ -50,31 +51,35 @@ def get_genbank_entries(org_id):
     genbank_entries = Entrez.esearch(db='nucleotide', term=org_id2, retmode='xml')
     esearch_result = Entrez.read(genbank_entries)
     seq_id = esearch_result['IdList']
-    for record in seq_id:
-        time.sleep(1)
-        handle = Entrez.efetch(db='nucleotide', id=record, rettype='fasta', retmode='text')
-        seq_record = SeqIO.read(handle, "fasta")
-        # record = SeqIO.read(seq_record, 'genbank')
-        # entries.append(record.seq)
-        entries.append(seq_record.seq)
-    # print(entries)
-    return(entries)
+    return(seq_id)
 
 
 def blast_entries(genbank_entries):
+    rec = []
     for record in genbank_entries:
-        result_handle = NCBIWWW.qblast("blastn", "nr", record)
-        blast_records = NCBIXML.parse(result_handle)
-        print(blast_records)
-        import pdb; pdb.set_trace()
+        try:
+            result_handle = NCBIWWW.qblast("blastn", "nt", record)
+            blast_records = NCBIXML.read(result_handle)
+            b_parser = NCBIWWW.BlastParser()
+            b_record = b_parser.parse(blast_records)
+            rec.append(b_record)
+            print(b_record)
+            import pdb; pdb.set_trace()
+        except:
+            pass
 
+    return rec
+
+
+def write_file(blast_results):
+    pass
 
 def main():
     Entrez.email = 'gcagle1@lsu.edu'
     args = get_args()
     org_id = get_tax_id(args)
     genbank_entries = get_genbank_entries(org_id)
-    blast_entries(genbank_entries)
+    blast_results = blast_entries(genbank_entries)
 
 if __name__ == '__main__':
     main()
