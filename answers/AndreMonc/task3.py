@@ -97,7 +97,6 @@ def blast_with_GIs(GI_seqIDs):
 
 def main():
     args = parser()
-    """
     tax_identifier = get_sp_identifier(args.name)
     # print(tax_identifier)
     genbank_identifiers = get_genbank_identifiers(tax_identifier)
@@ -106,8 +105,7 @@ def main():
     # print(nested_data_list)
     GI_seqIDs = get_GI_seqIDs(nested_data_list)
     # print(GI_seqIDs)
-    """
-    GI_seqIDs = ['239819098', '815826725', '49458051', '49458049', '223037237', '219398693', '215260324', '57792506', '34484220', '225031058']
+    #GI_seqIDs = ['239819098', '815826725', '49458051', '49458049', '223037237', '219398693', '215260324', '57792506', '34484220', '225031058']
     os.makedirs(args.out_dir)
     os.chdir(args.out_dir)
     blast_with_GIs(GI_seqIDs)
