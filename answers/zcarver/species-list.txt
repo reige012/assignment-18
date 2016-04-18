@@ -20,11 +20,11 @@ melozone leucotis
 oriturus superciliosus
 passerculus sandwichensis
 passerella iliaca
-aimophila ruficauda
+peucaea ruficauda
 pezopetes capitalis
 pipilo chlorurus
 pooecetes gramineus
-aimophila strigiceps
+rhynchospiza strigiceps
 spizella arborea
 spizella atrogularis
 zonotrichia atricapilla
